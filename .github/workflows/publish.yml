@@ -21,10 +21,10 @@ jobs:
         script-path: build.cake
         target: Setup
         arguments: |
-          app-version: "${{ github.event.release.tag_name }}"
+          app-version: ${{ github.event.release.tag_name }}
     - name: Upload the artifacts
       uses: AButler/upload-release-assets@v2.0
       with: 
         files: '.artifacts/*'
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        release-tag: "${{ github.event.release.tag_name }}"
+        release-tag: ${{ github.event.release.tag_name }}
