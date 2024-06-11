@@ -2,6 +2,7 @@ var target = Argument("target", "Test");
 var configuration = Argument("configuration", "Release");
 
 var version = Argument("app-version", "");
+var runtime = Argument("app-runtime", "win-x64");
 
 Task("Clean")
     .Does(() =>
@@ -51,6 +52,8 @@ Task("Publish")
     DotNetPublish("./Source/TranslationViewer/TranslationViewer.csproj", new DotNetPublishSettings
     {
         NoRestore = true,
+        Runtime = runtime,
+        SelfContained = false,
         OutputDirectory = "./Setup/Files",
         Configuration = configuration,
         MSBuildSettings = new DotNetMSBuildSettings()
@@ -72,7 +75,7 @@ Task("Setup")
     var settings = new InnoSetupSettings
     {
         OutputDirectory = "./.artifacts",
-        OutputBaseFilename = $"TranslationViewerSetup-v{actualVersion}",
+        OutputBaseFilename = $"TranslationViewerSetup-v{actualVersion}-{runtime}",
         ArgumentCustomization = arg => arg.Append("/DMyAppVersion=" + actualVersion),
     };
         
