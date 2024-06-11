@@ -10,9 +10,10 @@ env:
 
 jobs:
   publish:
-
     runs-on: windows-latest
-
+    strategy:
+      matrix:
+        runtime: ['win-x86', 'win-x64', 'win-arm64']
     steps:
     - uses: actions/checkout@v3
     - name: Run the Cake script
@@ -22,6 +23,7 @@ jobs:
         target: Setup
         arguments: |
           app-version: ${{ github.event.release.tag_name }}
+          app-runtime: ${{ matrix.runtime }}
     - name: Upload the artifacts
       uses: AButler/upload-release-assets@v2.0
       with: 
