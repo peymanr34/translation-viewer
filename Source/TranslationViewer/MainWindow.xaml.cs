@@ -50,7 +50,7 @@ namespace TranslationViewer
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            versionTextBlock.Text = Assembly.GetEntryAssembly()?.GetName()?.Version?.ToString();
+            versionTextBlock.Text = Assembly.GetEntryAssembly()?.GetName()?.Version?.ToString(3);
         }
 
         private void Window_Activated(object sender, EventArgs e)

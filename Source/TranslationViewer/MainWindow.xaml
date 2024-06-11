@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="clr-namespace:TranslationViewer.Models"
     xmlns:vm="clr-namespace:TranslationViewer.ViewModels"
-    Title="Translation Viewer for Inno Setup"
+    Title="Translation Viewer"
     Width="1024"
     Height="768"
     Activated="Window_Activated"
