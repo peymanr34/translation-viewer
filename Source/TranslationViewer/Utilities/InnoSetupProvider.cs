@@ -23,23 +23,26 @@ namespace TranslationViewer.Utilities
 
                 var keyPairDefault = line.Split('=');
 
-                string defaultKey = keyPairDefault[0].Trim();
-                string defaultValue = keyPairDefault[1].Trim();
-
-                string? keyPairTranslation = linesTranslation
-                    .Where(x => x.StartsWith(defaultKey + "="))
-                    .FirstOrDefault();
-
-                string? translationValue = keyPairTranslation?.Split('=')[1].Trim();
-
                 var item = new TranslationItem
                 {
-                    Key = defaultKey,
-                    Original = defaultValue,
-                    Translation = translationValue,
+                    Key = keyPairDefault[0].Trim(),
+                    Original = keyPairDefault[1].Trim(),
                 };
 
-                if (defaultValue.EndsWith(".") && translationValue?.EndsWith(".") == false)
+                string? keyPairTranslation = linesTranslation
+                    .Where(x => x.StartsWith(item.Key + "="))
+                    .FirstOrDefault();
+
+                item.Translation = keyPairTranslation?.Split('=')[1].Trim();
+
+                if (!string.IsNullOrEmpty(item.Original) &&
+                    string.IsNullOrEmpty(item.Translation))
+                {
+                    item.HasErrors = true;
+                }
+
+                if (item.Original.EndsWith(".") &&
+                    item.Translation?.EndsWith(".") == false)
                 {
                     item.HasErrors = true;
                 }

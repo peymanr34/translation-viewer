@@ -127,7 +127,20 @@
                         <TextBlock
                             Margin="0,2"
                             FontWeight="Bold"
-                            Text="{Binding Key}" />
+                            Text="{Binding Key}">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding HasErrors}" Value="True">
+                                            <Setter Property="Foreground" Value="Crimson" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding HasErrors}" Value="False">
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
 
                         <TextBlock
                             Margin="0,2"
@@ -146,12 +159,6 @@
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding DataContext.IsTranslationRightToLeft, RelativeSource={RelativeSource AncestorType=Window}}" Value="False">
                                             <Setter Property="FlowDirection" Value="LeftToRight" />
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding HasErrors}" Value="True">
-                                            <Setter Property="Foreground" Value="Crimson" />
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding HasErrors}" Value="False">
-                                            <Setter Property="Foreground" Value="Black" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
