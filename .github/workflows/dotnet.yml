@@ -16,9 +16,9 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Run the Cake script
-      uses: cake-build/cake-action@v1
+      uses: cake-build/cake-action@v3
       with:
         script-path: build.cake
         target: Test
