@@ -38,8 +38,8 @@
             Header="Files">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="12*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
@@ -52,21 +52,21 @@
                 <TextBlock
                     Grid.Row="0"
                     Grid.Column="0"
-                    Margin="0,5,5,5"
+                    Margin="5"
+                    VerticalAlignment="Center"
                     Text="Default:" />
 
                 <TextBox
                     Grid.Row="0"
                     Grid.Column="1"
-                    Margin="0,5,5,5"
+                    Margin="5"
                     IsReadOnly="True"
                     Text="{Binding DefaultPath}" />
 
                 <Button
                     Grid.Row="0"
                     Grid.Column="2"
-                    Margin="0,5,5,5"
-                    Padding="5,0"
+                    Margin="5"
                     Command="{Binding BrowseDefaultCommand}"
                     Content="..."
                     ToolTip="Browse for the Inno Setup 'Default' translation file." />
@@ -74,8 +74,7 @@
                 <Button
                     Grid.Row="0"
                     Grid.Column="3"
-                    Margin="0,5,5,5"
-                    Padding="5,0"
+                    Margin="5"
                     Click="OpenDefaultFile_Click"
                     Content="&gt;"
                     ToolTip="Open with Inno Setup." />
@@ -83,21 +82,21 @@
                 <TextBlock
                     Grid.Row="1"
                     Grid.Column="0"
-                    Margin="0,5,5,5"
+                    Margin="5"
+                    VerticalAlignment="Center"
                     Text="Translation:" />
 
                 <TextBox
                     Grid.Row="1"
                     Grid.Column="1"
-                    Margin="0,5,5,5"
+                    Margin="5"
                     IsReadOnly="True"
                     Text="{Binding TranslationPath}" />
 
                 <Button
                     Grid.Row="1"
                     Grid.Column="2"
-                    Margin="0,5,5,5"
-                    Padding="5,0"
+                    Margin="5"
                     Command="{Binding BrowseTranslationCommand}"
                     Content="..."
                     ToolTip="Browse for the Inno Setup translation file." />
@@ -105,8 +104,7 @@
                 <Button
                     Grid.Row="1"
                     Grid.Column="3"
-                    Margin="0,5,5,5"
-                    Padding="5,0"
+                    Margin="5"
                     Click="OpenTranslationFile_Click"
                     Content="&gt;"
                     ToolTip="Open with Inno Setup." />
