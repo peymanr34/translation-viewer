@@ -11,7 +11,6 @@
     Width="1024"
     Height="768"
     Activated="Window_Activated"
-    Loaded="Window_Loaded"
     mc:Ignorable="d">
     <Window.DataContext>
         <vm:MainViewModel />
@@ -180,11 +179,6 @@
 
             <TextBlock Margin="0,0,5,0" Text="Modified:" />
             <TextBlock Text="{Binding TranslationLastWriteTime, StringFormat='{}{0:yyyy-MM-dd HH:mm:ss}'}" />
-
-            <Separator Margin="5" />
-
-            <TextBlock Margin="0,0,5,0" Text="Version:" />
-            <TextBlock x:Name="versionTextBlock" />
         </StackPanel>
     </Grid>
 </Window>

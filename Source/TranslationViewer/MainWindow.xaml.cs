@@ -20,6 +20,8 @@ namespace TranslationViewer
             _viewModel.DefaultPath ??= InnoSetupProvider.GetDefaultTranslationFile();
 
             DataContext = _viewModel;
+
+            Title = $"Translation Viewer (v{Assembly.GetEntryAssembly()?.GetName()?.Version?.ToString(3)})";
         }
 
         private static void OpenWithInnoSetupOrDefault(string? fileName)
@@ -46,11 +48,6 @@ namespace TranslationViewer
         private void OpenTranslationFile_Click(object sender, RoutedEventArgs e)
         {
             OpenWithInnoSetupOrDefault(_viewModel.TranslationPath);
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            versionTextBlock.Text = Assembly.GetEntryAssembly()?.GetName()?.Version?.ToString(3);
         }
 
         private void Window_Activated(object sender, EventArgs e)
