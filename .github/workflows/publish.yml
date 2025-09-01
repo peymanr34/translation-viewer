@@ -15,7 +15,7 @@ jobs:
       matrix:
         runtime: ['win-x86', 'win-x64', 'win-arm64']
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Run the Cake script
       uses: cake-build/cake-action@v3
       with:
