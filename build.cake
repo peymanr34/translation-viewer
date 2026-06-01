@@ -4,6 +4,9 @@ var configuration = Argument("configuration", "Release");
 var version = Argument("app-version", "");
 var runtime = Argument("app-runtime", "win-x64");
 
+var solution = "./Source/TranslationViewer.slnx";
+var project = "./Source/TranslationViewer/TranslationViewer.csproj";
+
 Task("Clean")
     .Does(() =>
 {
@@ -16,7 +19,7 @@ Task("Build")
     .IsDependentOn("Clean")
     .Does(() =>
 {
-    DotNetBuild("./Source/TranslationViewer.sln", new DotNetBuildSettings
+    DotNetBuild(solution, new DotNetBuildSettings
     {
         Configuration = configuration,
     });
@@ -26,7 +29,7 @@ Task("Test")
     .IsDependentOn("Build")
     .Does(() =>
 {
-    DotNetTest("./Source/TranslationViewer.sln", new DotNetTestSettings
+    DotNetTest(solution, new DotNetTestSettings
     {
         Configuration = configuration,
         NoBuild = true,
@@ -49,7 +52,7 @@ Task("Publish")
         actualVersion = version.Substring(1);
     }
 
-    DotNetPublish("./Source/TranslationViewer/TranslationViewer.csproj", new DotNetPublishSettings
+    DotNetPublish(project, new DotNetPublishSettings
     {
         NoRestore = true,
         Runtime = runtime,

@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="../build.cake" />
+    <File Path="../README.md" />
+    <File Path="../Setup/script.iss" />
+    <File Path=".editorconfig" />
+  </Folder>
+  <Project Path="TranslationViewer/TranslationViewer.csproj" />
+</Solution>
