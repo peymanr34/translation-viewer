@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Windows;
-using TranslationViewer.Utilities;
 using TranslationViewer.ViewModels;
 
 namespace TranslationViewer
@@ -17,37 +16,11 @@ namespace TranslationViewer
             InitializeComponent();
 
             _viewModel = new MainViewModel();
-            _viewModel.DefaultPath ??= InnoSetupProvider.GetDefaultTranslationFile();
+            _viewModel.Initialize();
 
             DataContext = _viewModel;
 
             Title = $"Translation Viewer (v{Assembly.GetEntryAssembly()?.GetName()?.Version?.ToString(3)})";
-        }
-
-        private static void OpenWithInnoSetupOrDefault(string? fileName)
-        {
-            if (!File.Exists(fileName))
-            {
-                MessageBox.Show("File doesn't exists.");
-                return;
-            }
-
-            Process.Start(new ProcessStartInfo
-            {
-                UseShellExecute = true,
-                Arguments = $"\"{fileName}\"",
-                FileName = InnoSetupProvider.GetExecutableLocation(),
-            });
-        }
-
-        private void OpenDefaultFile_Click(object sender, RoutedEventArgs e)
-        {
-            OpenWithInnoSetupOrDefault(_viewModel.DefaultPath);
-        }
-
-        private void OpenTranslationFile_Click(object sender, RoutedEventArgs e)
-        {
-            OpenWithInnoSetupOrDefault(_viewModel.TranslationPath);
         }
 
         private void Window_Activated(object sender, EventArgs e)

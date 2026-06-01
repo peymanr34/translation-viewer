@@ -74,46 +74,42 @@ namespace TranslationViewer.Utilities
             return null;
         }
 
-        public static string? GetDefaultTranslationFile()
+        public static string? GetInstalledLocation()
         {
-            var location = GetInstalledLocation();
-
-            if (location is null)
+            foreach (var keyPath in GetRegistryKeyPaths())
             {
-                return null;
-            }
+                using var key = Registry.LocalMachine.OpenSubKey(keyPath)
+                    ?? Registry.CurrentUser.OpenSubKey(keyPath);
 
-            return Path.Join(location, "Default.isl");
-        }
-
-        public static string? GetExecutableLocation()
-        {
-            var location = GetInstalledLocation();
-
-            if (location is null)
-            {
-                return null;
-            }
-
-            return Path.Join(location, "Compil32.exe");
-        }
-
-        private static string? GetInstalledLocation()
-        {
-            // On 64-bit Windows, the registry key for Inno Setup will be accessible under Wow6432Node.
-            var keyPath = Environment.Is64BitOperatingSystem
-                ? @"SOFTWARE\Wow6432Node\"
-                : @"SOFTWARE\";
-
-            var registryKey = Registry.LocalMachine
-                .OpenSubKey($@"{keyPath}Microsoft\Windows\CurrentVersion\Uninstall\Inno Setup 6_is1");
-
-            if (registryKey is not null)
-            {
-                return registryKey.GetValue("InstallLocation")?.ToString();
+                if (key?.GetValue("InstallLocation") is string path)
+                {
+                    return path;
+                }
             }
 
             return null;
+        }
+
+        private static IEnumerable<string> GetRegistryKeyPaths()
+        {
+            // Inno Setup 7 (64-bit) on 64-bit Windows or Inno Setup 7 (32-bit) on 32-bit Windows.
+            yield return GetRegistryKeyPath("Inno Setup 7_is1");
+            // Inno Setup 7 (32-bit) on 64-bit Windows.
+            yield return GetRegistryKeyPath("Inno Setup 7_is1", true);
+            // Inno Setup 6 is 32-bit only.
+            yield return GetRegistryKeyPath("Inno Setup 6_is1", Environment.Is64BitOperatingSystem);
+        }
+
+        private static string GetRegistryKeyPath(string relativePath, bool useWow6432 = false)
+        {
+            var baseKeyPath = "SOFTWARE\\";
+
+            if (useWow6432)
+            {
+                baseKeyPath += "Wow6432Node\\";
+            }
+
+            return $"{baseKeyPath}Microsoft\\Windows\\CurrentVersion\\Uninstall\\{relativePath}";
         }
     }
 }

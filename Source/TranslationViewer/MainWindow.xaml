@@ -74,7 +74,7 @@
                     Grid.Row="0"
                     Grid.Column="3"
                     Margin="5"
-                    Click="OpenDefaultFile_Click"
+                    Command="{Binding OpenDefaultCommand}"
                     Content="&gt;"
                     ToolTip="Open with Inno Setup." />
 
@@ -104,7 +104,7 @@
                     Grid.Row="1"
                     Grid.Column="3"
                     Margin="5"
-                    Click="OpenTranslationFile_Click"
+                    Command="{Binding OpenTranslationCommand}"
                     Content="&gt;"
                     ToolTip="Open with Inno Setup." />
             </Grid>
