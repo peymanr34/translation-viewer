@@ -25,8 +25,6 @@ jobs:
           app-version: ${{ github.event.release.tag_name }}
           app-runtime: ${{ matrix.runtime }}
     - name: Upload the artifacts
-      uses: AButler/upload-release-assets@v3.0
-      with: 
-        files: '.artifacts/*'
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-        release-tag: ${{ github.event.release.tag_name }}
+      run: gh release upload ${{ github.event.release.tag_name }} .artifacts/*
+      env: 
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
