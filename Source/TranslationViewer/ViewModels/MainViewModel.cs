@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using MvvmGen;
-using TranslationViewer.Models;
 using TranslationViewer.Utilities;
 
 namespace TranslationViewer.ViewModels
@@ -26,7 +25,7 @@ namespace TranslationViewer.ViewModels
         private bool _isTranslationRightToLeft;
 
         [Property]
-        private ObservableCollection<TranslationItem> _items = [];
+        private ObservableCollection<ItemViewModel> _items = [];
 
         public int TotalCount
             => _items?.Count ?? 0;

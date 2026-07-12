@@ -5,7 +5,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:TranslationViewer"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="clr-namespace:TranslationViewer.Models"
     xmlns:vm="clr-namespace:TranslationViewer.ViewModels"
     Title="Translation Viewer"
     Width="1024"
@@ -24,91 +23,85 @@
         </Grid.RowDefinitions>
 
         <TextBlock
-            Margin="0,0,0,5"
+            Margin="5"
             VerticalAlignment="Center"
             FontFamily="Segoe UI Light"
             FontSize="18"
             Text="Translation Viewer for Inno Setup (Preview)" />
 
-        <GroupBox
-            Grid.Row="1"
-            Margin="0,0,0,5"
-            Padding="5"
-            Header="Files">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+        <Grid Grid.Row="1" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-                <TextBlock
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Margin="5"
-                    VerticalAlignment="Center"
-                    Text="Default:" />
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Margin="5"
+                VerticalAlignment="Center"
+                Text="Default:" />
 
-                <TextBox
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Margin="5"
-                    IsReadOnly="True"
-                    Text="{Binding DefaultPath}" />
+            <TextBox
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="5"
+                IsReadOnly="True"
+                Text="{Binding DefaultPath}" />
 
-                <Button
-                    Grid.Row="0"
-                    Grid.Column="2"
-                    Margin="5"
-                    Command="{Binding BrowseDefaultCommand}"
-                    Content="..."
-                    ToolTip="Browse for the Inno Setup 'Default' translation file." />
+            <Button
+                Grid.Row="0"
+                Grid.Column="2"
+                Margin="5"
+                Command="{Binding BrowseDefaultCommand}"
+                Content="..."
+                ToolTip="Browse for the Inno Setup 'Default' translation file." />
 
-                <Button
-                    Grid.Row="0"
-                    Grid.Column="3"
-                    Margin="5"
-                    Command="{Binding OpenDefaultCommand}"
-                    Content="&gt;"
-                    ToolTip="Open with Inno Setup." />
+            <Button
+                Grid.Row="0"
+                Grid.Column="3"
+                Margin="5"
+                Command="{Binding OpenDefaultCommand}"
+                Content="&gt;"
+                ToolTip="Open with Inno Setup." />
 
-                <TextBlock
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    Margin="5"
-                    VerticalAlignment="Center"
-                    Text="Translation:" />
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="5"
+                VerticalAlignment="Center"
+                Text="Translation:" />
 
-                <TextBox
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    Margin="5"
-                    IsReadOnly="True"
-                    Text="{Binding TranslationPath}" />
+            <TextBox
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="5"
+                IsReadOnly="True"
+                Text="{Binding TranslationPath}" />
 
-                <Button
-                    Grid.Row="1"
-                    Grid.Column="2"
-                    Margin="5"
-                    Command="{Binding BrowseTranslationCommand}"
-                    Content="..."
-                    ToolTip="Browse for the Inno Setup translation file." />
+            <Button
+                Grid.Row="1"
+                Grid.Column="2"
+                Margin="5"
+                Command="{Binding BrowseTranslationCommand}"
+                Content="..."
+                ToolTip="Browse for the Inno Setup translation file." />
 
-                <Button
-                    Grid.Row="1"
-                    Grid.Column="3"
-                    Margin="5"
-                    Command="{Binding OpenTranslationCommand}"
-                    Content="&gt;"
-                    ToolTip="Open with Inno Setup." />
-            </Grid>
-        </GroupBox>
+            <Button
+                Grid.Row="1"
+                Grid.Column="3"
+                Margin="5"
+                Command="{Binding OpenTranslationCommand}"
+                Content="&gt;"
+                ToolTip="Open with Inno Setup." />
+        </Grid>
 
         <ListView
             Name="listView1"
@@ -119,49 +112,68 @@
             ItemsSource="{Binding Items}"
             ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Margin="0,5">
-                        <TextBlock
-                            Margin="0,2"
-                            FontWeight="Bold"
-                            Text="{Binding Key}">
-                            <TextBlock.Style>
-                                <Style TargetType="TextBlock">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding HasErrors}" Value="True">
-                                            <Setter Property="Foreground" Value="Crimson" />
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding HasErrors}" Value="False">
-                                            <Setter Property="Foreground" Value="Black" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
+                <DataTemplate DataType="vm:ItemViewModel">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel
+                            Grid.Column="0"
+                            Margin="0,0,15,0"
+                            VerticalAlignment="Center">
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                Text="{Binding OriginalLineNumber}" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                Text="{Binding TranslationLineNumber}" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Margin="0,5">
+                            <TextBlock
+                                Margin="0,2"
+                                FontWeight="Bold"
+                                Text="{Binding Key}">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding HasErrors}" Value="True">
+                                                <Setter Property="Foreground" Value="Crimson" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding HasErrors}" Value="False">
+                                                <Setter Property="Foreground" Value="Black" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
 
-                        <TextBlock
-                            Margin="0,2"
-                            Text="{Binding Original}"
-                            TextWrapping="Wrap" />
+                            <TextBlock
+                                Margin="0,2"
+                                Text="{Binding Original}"
+                                TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Margin="0,2"
-                            Text="{Binding Translation}"
-                            TextWrapping="Wrap">
-                            <TextBlock.Style>
-                                <Style TargetType="TextBlock">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding DataContext.IsTranslationRightToLeft, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
-                                            <Setter Property="FlowDirection" Value="RightToLeft" />
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding DataContext.IsTranslationRightToLeft, RelativeSource={RelativeSource AncestorType=Window}}" Value="False">
-                                            <Setter Property="FlowDirection" Value="LeftToRight" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-                    </StackPanel>
+                            <TextBlock
+                                Margin="0,2"
+                                Text="{Binding Translation}"
+                                TextWrapping="Wrap">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding DataContext.IsTranslationRightToLeft, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
+                                                <Setter Property="FlowDirection" Value="RightToLeft" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding DataContext.IsTranslationRightToLeft, RelativeSource={RelativeSource AncestorType=Window}}" Value="False">
+                                                <Setter Property="FlowDirection" Value="LeftToRight" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.Win32;
-using TranslationViewer.Models;
+using TranslationViewer.ViewModels;
 
 namespace TranslationViewer.Utilities
 {
     public static class InnoSetupProvider
     {
-        public static IEnumerable<TranslationItem> GetTranslationItems(string[] linesDefault, string[] linesTranslation)
+        public static IEnumerable<ItemViewModel> GetTranslationItems(string[] linesDefault, string[] linesTranslation)
         {
             for (int i = 0; i < linesDefault.Length; i++)
             {
@@ -23,17 +23,21 @@ namespace TranslationViewer.Utilities
 
                 var keyPairDefault = line.Split('=');
 
-                var item = new TranslationItem
+                var item = new ItemViewModel
                 {
                     Key = keyPairDefault[0].Trim(),
                     Original = keyPairDefault[1].Trim(),
+                    OriginalLineNumber = i,
                 };
 
                 string? keyPairTranslation = linesTranslation
-                    .Where(x => x.StartsWith(item.Key + "="))
-                    .FirstOrDefault();
+                    .FirstOrDefault(x => x.StartsWith(item.Key + "="));
 
-                item.Translation = keyPairTranslation?.Split('=')[1].Trim();
+                if (keyPairTranslation is not null)
+                {
+                    item.Translation = keyPairTranslation.Split('=')[1].Trim();
+                    item.TranslationLineNumber = linesTranslation.IndexOf(keyPairTranslation);
+                }
 
                 if (!string.IsNullOrEmpty(item.Original) &&
                     string.IsNullOrEmpty(item.Translation))
